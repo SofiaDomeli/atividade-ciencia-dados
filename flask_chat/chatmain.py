@@ -3,3 +3,6 @@
 # tem somente uma linha que importa a instancia da aplicacao.
 # A aplicacao Flask chama-se 'app' e faz parte do pacote 'app'.
 from app import app
+
+if __name__ == "__main__":
+    app.run(debug=True)

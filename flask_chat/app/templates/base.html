@@ -1,23 +1,63 @@
 <!DOCTYPE html>
-<html>
+<html lang="pt-br">
 <head>
-    <title>{% block titulo %}{% endblock %}</title>
+  <meta charset="UTF-8">
+  <title>Chat com IA</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+  <!-- <link rel="stylesheet" href="../static/style.css"> -->
 </head>
 <body>
-    <h1>{% block cabecalho %}{% endblock %}</h1>
+  <main class="container">
+    <h1>Chat com IA</h1>
 
-    <form method="POST">
-        <label for="mensagem">Digite sua mensagem:</label><br>
-        <input type="text" id="mensagem" name="mensagem"><br><br>
-        <input type="submit" name="enviar" value="Enviar">
-        <input type="submit" name="encerrar" value="Encerrar Conversa">
-    </form>
+    <section class="chat-form">
+      <form method="POST">
+        <label for="mensagem">Digite sua mensagem como {% block titulo %}Usuário{% endblock %}:</label>
+        <input type="text" id="mensagem" name="mensagem" placeholder="Escreva aqui...">
+        <div class="buttons">
+          <input type="submit" name="enviar" value="Enviar" onclick="abrirModalJuiz()">
+          <input type="submit" name="encerrar" value="Encerrar Conversa" onclick="abrirModalJuiz()">
+        </div>
+      </form>
+    </section>
 
-    <h2>Janela do Chat</h2>
-    <pre>
+    <section class="chat-box">
+      <h2>🗨️ Janela do Chat</h2>
+      <pre>
 {% for linha in historico %}
 {{ linha|safe }}
 {% endfor %}
-    </pre>
+      </pre>
+    </section>
+
+    <div style="margin-top: 20px;">
+      <button onclick="abrirModalRAG()">🔍 Consultar Base (RAG)</button>
+      <button onclick="abrirModalJuiz()">⚖️ Análise do Juiz</button>
+    </div>
+
+    <!-- Modal RAG -->
+    <div id="ragModal" class="modal">
+      <div class="modal-content">
+        <span class="close" onclick="fecharModal('ragModal')">&times;</span>
+        <h3>🔎 Documentos relacionados:</h3>
+        <div>
+          <pre id="ragContent">Carregando...</pre>
+        </div>
+      </div>
+    </div>
+
+    <!-- Modal Juiz -->
+    <div id="juizModal" class="modal">
+      <div class="modal-content">
+        <span class="close" onclick="fecharModal('juizModal')">&times;</span>
+        <h3>⚖️ Análise do Juiz:</h3>
+        <p id="juizContent">Carregando...</p>
+      </div>
+    </div>
+  </main>
+
+  <script src="{{ url_for('static', filename='script.js') }}"></script>
+  <!-- <script src="../static/script.js"></script> -->
 </body>
 </html>

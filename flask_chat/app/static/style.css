@@ -1,0 +1,743 @@
+/* Reset e configurações globais */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+:root {
+    --primary-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    --secondary-gradient: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+    --accent-gradient: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+    --dark-bg: #0f1419;
+    --card-bg: rgba(255, 255, 255, 0.05);
+    --glass-bg: rgba(255, 255, 255, 0.1);
+    --text-primary: #ffffff;
+    --text-secondary: #b8c5d1;
+    --border-color: rgba(255, 255, 255, 0.1);
+    --shadow-primary: 0 8px 32px rgba(0, 0, 0, 0.3);
+    --shadow-glow: 0 0 20px rgba(102, 126, 234, 0.3);
+}
+
+/* Animações */
+@keyframes float {
+    0%, 100% { transform: translateY(0px); }
+    50% { transform: translateY(-10px); }
+}
+
+@keyframes pulse {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+}
+
+@keyframes slideIn {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes gradientShift {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+@keyframes messageAppear {
+    from {
+        opacity: 0;
+        transform: translateX(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+@keyframes bounce {
+    0%, 20%, 53%, 80%, 100% { transform: translate3d(0,0,0); }
+    40%, 43% { transform: translate3d(0, -15px, 0); }
+    70% { transform: translate3d(0, -8px, 0); }
+    90% { transform: translate3d(0, -3px, 0); }
+}
+
+@keyframes wiggle {
+    0%, 7% { transform: rotateZ(0); }
+    15% { transform: rotateZ(-15deg); }
+    20% { transform: rotateZ(10deg); }
+    25% { transform: rotateZ(-10deg); }
+    30% { transform: rotateZ(6deg); }
+    35% { transform: rotateZ(-4deg); }
+    40%, 100% { transform: rotateZ(0); }
+}
+
+@keyframes pawPrint {
+    0% { opacity: 0; transform: scale(0) rotate(0deg); }
+    50% { opacity: 0.6; transform: scale(1.2) rotate(180deg); }
+    100% { opacity: 0; transform: scale(0.8) rotate(360deg); }
+}
+
+/* Corpo da página */
+body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+    background: var(--dark-bg);
+    background-image: 
+        radial-gradient(circle at 20% 80%, rgba(102, 126, 234, 0.15) 0%, transparent 50%),
+        radial-gradient(circle at 80% 20%, rgba(245, 87, 108, 0.15) 0%, transparent 50%),
+        radial-gradient(circle at 40% 40%, rgba(79, 172, 254, 0.1) 0%, transparent 50%);
+    min-height: 100vh;
+    padding: 20px;
+    color: var(--text-primary);
+    position: relative;
+    overflow-x: hidden;
+}
+
+/* Partículas animadas de fundo com pegadas */
+body::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: 
+        radial-gradient(2px 2px at 20px 30px, rgba(255, 255, 255, 0.1), transparent),
+        radial-gradient(2px 2px at 40px 70px, rgba(102, 126, 234, 0.2), transparent),
+        radial-gradient(1px 1px at 90px 40px, rgba(245, 87, 108, 0.15), transparent);
+    background-repeat: repeat;
+    background-size: 200px 100px;
+    pointer-events: none;
+    z-index: -1;
+}
+
+/* Pegadas de gato flutuantes */
+body::after {
+    content: '🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    font-size: 12px;
+    opacity: 0.1;
+    animation: pawPrint 8s ease-in-out infinite;
+    pointer-events: none;
+    z-index: -1;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    align-items: flex-start;
+    padding: 50px;
+}
+
+/* Container principal */
+.container {
+    max-width: 900px;
+    margin: 0 auto;
+    background: var(--glass-bg);
+    backdrop-filter: blur(20px);
+    border: 1px solid var(--border-color);
+    border-radius: 20px;
+    padding: 40px;
+    box-shadow: var(--shadow-primary);
+    position: relative;
+}
+
+.container::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+}
+
+/* Títulos com elementos fofos */
+h1 {
+    text-align: center;
+    margin-bottom: 30px;
+    font-size: 2.5rem;
+    font-weight: 700;
+    background: var(--primary-gradient);
+    background-size: 200% 200%;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    animation: gradientShift 3s ease infinite;
+    text-shadow: 0 0 30px rgba(102, 126, 234, 0.5);
+    position: relative;
+}
+
+h1::before {
+    content: '🐱';
+    position: absolute;
+    left: -60px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 2rem;
+    animation: wiggle 2s ease-in-out infinite;
+}
+
+h1::after {
+    content: '🐼';
+    position: absolute;
+    right: -60px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 2rem;
+    animation: bounce 2s ease-in-out infinite;
+}
+
+h2 {
+    color: var(--text-primary);
+    margin-bottom: 20px;
+    font-size: 1.4rem;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    position: relative;
+}
+
+h2::before {
+    content: '🐾';
+    animation: pulse 2s ease-in-out infinite;
+}
+
+h2::after {
+    content: '';
+    width: 4px;
+    height: 20px;
+    background: var(--accent-gradient);
+    border-radius: 2px;
+    margin-left: 10px;
+}
+
+/* Formulário */
+.chat-form {
+    margin-bottom: 40px;
+    background: var(--card-bg);
+    backdrop-filter: blur(10px);
+    border-radius: 16px;
+    padding: 30px;
+    border: 1px solid var(--border-color);
+    transition: all 0.3s ease;
+}
+
+.chat-form:hover {
+    border-color: rgba(102, 126, 234, 0.5);
+    box-shadow: var(--shadow-glow);
+}
+
+form label {
+    display: block;
+    font-weight: 600;
+    margin-bottom: 15px;
+    color: var(--text-secondary);
+    font-size: 1.1rem;
+}
+
+form input[type="text"] {
+    width: 100%;
+    padding: 16px 20px;
+    font-size: 1rem;
+    border-radius: 12px;
+    background: rgba(255, 255, 255, 0.05);
+    border: 2px solid var(--border-color);
+    color: var(--text-primary);
+    margin-bottom: 20px;
+    transition: all 0.3s ease;
+    backdrop-filter: blur(10px);
+}
+
+form input[type="text"]:focus {
+    outline: none;
+    border-color: #667eea;
+    box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.2);
+    background: rgba(255, 255, 255, 0.08);
+}
+
+form input[type="text"]::placeholder {
+    color: var(--text-secondary);
+    opacity: 0.7;
+}
+
+/* Botões */
+.buttons {
+    display: flex;
+    gap: 15px;
+    flex-wrap: wrap;
+}
+
+input[type="submit"] {
+    flex: 1;
+    padding: 14px 24px;
+    font-size: 1rem;
+    font-weight: 600;
+    border: none;
+    border-radius: 12px;
+    color: white;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+    min-width: 140px;
+}
+
+input[type="submit"]:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+}
+
+input[type="submit"]:active {
+    transform: translateY(0);
+}
+
+input[name="enviar"] {
+    background: var(--primary-gradient);
+    background-size: 200% 200%;
+    animation: gradientShift 3s ease infinite;
+}
+
+input[name="enviar"]:hover {
+    box-shadow: var(--shadow-glow);
+}
+
+input[name="encerrar"] {
+    background: var(--secondary-gradient);
+    background-size: 200% 200%;
+    animation: gradientShift 3s ease infinite reverse;
+}
+
+input[name="encerrar"]:hover {
+    box-shadow: 0 8px 25px rgba(245, 87, 108, 0.4);
+}
+
+/* Caixa de chat */
+.chat-box {
+    background: var(--card-bg);
+    backdrop-filter: blur(10px);
+    border-radius: 16px;
+    padding: 25px;
+    border: 1px solid var(--border-color);
+    margin-bottom: 30px;
+}
+
+.chat-box pre {
+    background: rgba(0, 0, 0, 0.3);
+    padding: 20px;
+    border-radius: 12px;
+    border: 1px solid var(--border-color);
+    height: 400px;
+    overflow-y: auto;
+    white-space: pre-wrap;
+    font-family: 'JetBrains Mono', 'Fira Code', Consolas, monospace;
+    color: var(--text-secondary);
+    line-height: 1.6;
+    scrollbar-width: thin;
+    scrollbar-color: rgba(102, 126, 234, 0.5) transparent;
+}
+
+.chat-box pre::-webkit-scrollbar {
+    width: 6px;
+}
+
+.chat-box pre::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.chat-box pre::-webkit-scrollbar-thumb {
+    background: rgba(102, 126, 234, 0.5);
+    border-radius: 3px;
+}
+
+.chat-box pre::-webkit-scrollbar-thumb:hover {
+    background: rgba(102, 126, 234, 0.7);
+}
+
+/* Cores das mensagens com animação */
+font[color="red"] {
+    color: #4facfe;
+    font-weight: 600;
+    animation: messageAppear 0.5s ease-out;
+}
+
+font[color="blue"] {
+    color: #b47fff;
+    font-weight: 600;
+    animation: messageAppear 0.5s ease-out;
+}
+
+font[color="green"] {
+    color: #ff7fd4;
+    font-weight: 600;
+    animation: messageAppear 0.5s ease-out;
+}
+
+font[color="black"] {
+    color: var(--text-secondary);
+    animation: messageAppear 0.5s ease-out;
+}
+
+/* Botões especiais (RAG e Juiz) */
+button {
+    padding: 14px 24px;
+    margin-right: 15px;
+    margin-bottom: 10px;
+    font-size: 1rem;
+    font-weight: 600;
+    background: var(--accent-gradient);
+    background-size: 200% 200%;
+    color: white;
+    border: none;
+    border-radius: 12px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+    animation: gradientShift 4s ease infinite;
+}
+
+button:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 10px 30px rgba(79, 172, 254, 0.4);
+    animation-play-state: paused;
+}
+
+button:hover::after {
+    content: '🐱';
+    position: absolute;
+    top: -5px;
+    right: -5px;
+    font-size: 1.2rem;
+    animation: bounce 0.5s ease-in-out;
+}
+
+button:active {
+    transform: translateY(-1px);
+}
+
+/* Modal moderno */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.8);
+    backdrop-filter: blur(5px);
+    animation: slideIn 0.3s ease-out;
+}
+
+.modal-content {
+    background: var(--glass-bg);
+    backdrop-filter: blur(20px);
+    padding: 40px;
+    margin: 5% auto;
+    width: 80%;
+    max-width: 600px;
+    border-radius: 20px;
+    border: 1px solid var(--border-color);
+    box-shadow: var(--shadow-primary);
+    position: relative;
+    animation: slideIn 0.4s ease-out;
+}
+
+.modal-content h3 {
+    color: var(--text-primary);
+    margin-bottom: 20px;
+    font-size: 1.3rem;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+#ragContent {
+    margin-bottom: 20px;
+    color: var(--text-secondary);
+    font-size: 1.1rem;
+    line-height: 1.6;
+}
+
+.close {
+    position: absolute;
+    right: 20px;
+    top: 20px;
+    font-size: 28px;
+    font-weight: bold;
+    cursor: pointer;
+    color: var(--text-secondary);
+    transition: all 0.3s ease;
+    width: 35px;
+    height: 35px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+}
+
+.close:hover {
+    color: var(--text-primary);
+    background: rgba(255, 255, 255, 0.1);
+    transform: rotate(90deg);
+}
+
+/* Página inicial melhorada com tema fofo */
+.index-container {
+    max-width: 500px;
+    margin: 80px auto;
+    background: var(--glass-bg);
+    backdrop-filter: blur(20px);
+    padding: 50px 40px;
+    border-radius: 24px;
+    text-align: center;
+    border: 1px solid var(--border-color);
+    box-shadow: var(--shadow-primary);
+    position: relative;
+}
+
+.index-container::before {
+    content: '🐱 🐼 🐱 🐼 🐱';
+    position: absolute;
+    top: -15px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 1.5rem;
+}
+
+.index-container::after {
+    content: '🐾 🐾 🐾 🐾 🐾';
+    position: absolute;
+    bottom: -15px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 1rem;
+    opacity: 0.7;
+}
+
+.index-container h1 {
+    margin-bottom: 25px;
+    font-size: 2.2rem;
+    position: relative;
+}
+
+.index-container h1::before {
+    left: -50px;
+    font-size: 1.8rem;
+}
+
+.index-container h1::after {
+    right: -50px;
+    font-size: 1.8rem;
+}
+
+.index-container p {
+    font-size: 1.1rem;
+    margin-bottom: 35px;
+    color: var(--text-secondary);
+    line-height: 1.6;
+    position: relative;
+}
+
+.index-container p::before {
+    content: '😺';
+    margin-right: 8px;
+}
+
+.index-buttons form {
+    margin-bottom: 20px;
+}
+
+.index-buttons input[type="submit"] {
+    width: 100%;
+    padding: 16px;
+    font-size: 1.1rem;
+    font-weight: 600;
+    border: none;
+    border-radius: 12px;
+    color: white;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.btn-user {
+    background: var(--primary-gradient);
+    background-size: 200% 200%;
+    animation: gradientShift 3s ease infinite;
+}
+
+.btn-user:hover {
+    transform: translateY(-3px);
+    box-shadow: var(--shadow-glow);
+}
+
+.btn-user:hover::before {
+    content: '🐱 Usuario';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 1.1rem;
+    animation: wiggle 0.5s ease-in-out;
+}
+
+.btn-user:hover .original-text {
+    opacity: 0;
+}
+
+.btn-attendant {
+    background: var(--accent-gradient);
+    background-size: 200% 200%;
+    animation: gradientShift 3s ease infinite reverse;
+}
+
+.btn-attendant:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 25px rgba(79, 172, 254, 0.4);
+}
+
+.btn-attendant:hover::before {
+    content: '🐼 Atendente';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 1.1rem;
+    animation: bounce 0.5s ease-in-out;
+}
+
+.btn-attendant:hover .original-text {
+    opacity: 0;
+}
+
+/* Responsividade melhorada */
+@media (max-width: 768px) {
+    .container {
+        padding: 25px;
+        margin: 10px;
+        border-radius: 16px;
+    }
+    
+    h1 {
+        font-size: 2rem;
+    }
+    
+    h1::before, h1::after {
+        position: static;
+        display: block;
+        margin: 10px 0;
+    }
+    
+    .buttons {
+        flex-direction: column;
+    }
+    
+    input[type="submit"] {
+        width: 100%;
+        min-width: auto;
+    }
+    
+    .chat-box pre {
+        height: 300px;
+        padding: 15px;
+    }
+    
+    .modal-content {
+        width: 95%;
+        margin: 10% auto;
+        padding: 25px;
+    }
+    
+    button {
+        width: 100%;
+        margin-right: 0;
+        margin-bottom: 15px;
+    }
+    
+    .index-container h1::before, 
+    .index-container h1::after {
+        position: static;
+        display: inline;
+        margin: 0 10px;
+        font-size: 1.5rem;
+    }
+}
+
+@media (max-width: 480px) {
+    body {
+        padding: 10px;
+    }
+    
+    .container {
+        padding: 20px;
+    }
+    
+    .chat-form {
+        padding: 20px;
+    }
+    
+    .index-container {
+        margin: 20px auto;
+        padding: 30px 25px;
+    }
+    
+    .index-container::before,
+    .index-container::after {
+        font-size: 1rem;
+    }
+    
+    h1 {
+        font-size: 1.8rem;
+    }
+    
+    h1::before, h1::after {
+        font-size: 1.2rem;
+    }
+}
+
+/* Extra */
+.info {
+  font-weight: bold;
+  font-size: 1.1rem;
+  display: inline-block;  /* Fundamental para Firefox! */
+  background: linear-gradient(
+    270deg,
+    #4facfe,
+    #00f2fe,
+    #843ee7,
+    #de3aa7,
+    #ed4a91,
+    #a347e0,
+    #65afef,
+    #4facfe,
+    #4facfe,
+    #00f2fe,
+    #843ee7,
+    #de3aa7,
+    #ed4a91
+  );
+  background-size: 200% 200%;
+  background-position: 0% 50%;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  color: transparent;
+  animation: rainbow-text-move 1s linear infinite;
+  text-shadow: 0 0 10px #fff6, 0 0 20px #0ff2;
+  border-radius: 6px;
+  padding: 2px 8px;
+}
+
+@keyframes rainbow-text-move {
+  0% { background-position: 0% 50%; }
+  100% { background-position: 100% 50%; }
+}

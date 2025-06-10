@@ -1,16 +1,25 @@
 <!DOCTYPE html>
-<html>
+<html lang="pt-br">
 <head>
-    <title>Página Inicial</title>
+    <meta charset="UTF-8">
+    <title>🐱🐼 Chat - Página Inicial</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
-    <h1>Bem-vindo ao Sistema de Chat</h1>
-    <form action="/usuario" target="_blank" method="get">
-        <input type="submit" value="Abrir como Usuário">
-    </form>
-    <br>
-    <form action="/atendente" target="_blank" method="get">
-        <input type="submit" value="Abrir como Atendente">
-    </form>
+    <div class="index-container">
+        <h1>Bem-vindo ao Sistema de Chat com IA</h1>
+        <div style="font-size:2.2rem; margin-bottom:12px;">🐱💬🐼</div>
+        <p>Escolha como deseja entrar no nosso chat:</p>
+
+        <div class="index-buttons">
+            <form action="/usuario" target="_blank" method="get">
+                <input type="submit" value="Entrar como Usuário" class="btn-user">
+            </form>
+            <form action="/atendente" target="_blank" method="get">
+                <input type="submit" value="Entrar como Atendente" class="btn-attendant">
+            </form>
+        </div>
+    </div>
 </body>
 </html>
