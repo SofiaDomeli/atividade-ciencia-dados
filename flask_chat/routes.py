@@ -23,11 +23,19 @@ llm_juiz = ChatGoogleGenerativeAI(model="gemini-2.0-flash", google_api_key=api_k
 prompt_juiz = ChatPromptTemplate.from_template(
     """Você é um juiz crítico que está tentando ajudar o aluno a não receber resposta incorretas. Avalie se a resposta do atendente está correta, parcialmente correta ou incorreta.
     Responda nesse estilo:
-    A informação está <span class='info'>CORRETA, PARCIALMENTE CORRETA ou INCORRETA!</span> E você deve justificar sua resposta.
+    A informação está <span class='info'>CORRETA, PARCIALMENTE CORRETA ou INCORRETA!</span> E você deve justificar sua resposta. Não coloque nada em negrito.
     Pergunta do aluno: "{pergunta}"
     Resposta do atendente: "{resposta}"
     """
 )
+
+llm_atendente = ChatGoogleGenerativeAI(model="gemini-2.0-flash", google_api_key=api_key, temperature=0.8)
+prompt_conversa= ChatPromptTemplate.from_template(
+    """Você é um juíz bem gente boa que avalia a conversa entre o aluno e o atendente.
+    Avalie a conversa e dê um feedback construtivo.
+    Não coloque nada em negrito.\n\n
+    {conversa}"""
+    )
 
 # Funções principais
 def registrar_log(origem, mensagem):
@@ -44,7 +52,7 @@ def carregar_historico():
         linhas = list(f.readlines())
     coloridas = []
     for l in linhas:
-        if "[USUÁRIO]" in l:
+        if "[ALUNO]" in l:
             cor = "red"
         elif "[ATENDENTE]" in l:
             cor = "blue"
@@ -54,6 +62,12 @@ def carregar_historico():
             cor = "black"
         coloridas.append(f'<font color="{cor}">{l.strip()}</font>')
     return coloridas
+
+
+def limpar_historico():
+    if os.path.exists(LOG):
+        os.remove(LOG)
+    os.makedirs("logs", exist_ok=True)
 
 
 def carregar_conversa():
@@ -91,6 +105,16 @@ def avaliar_resposta(pergunta, resposta):
     except Exception as e:
         return f"Erro ao avaliar: {e}"
 
+
+def avaliar_conversa(conversa):
+    try:
+        inputs = prompt_conversa.format(conversa=conversa)
+        output = llm_atendente.invoke(inputs)
+        return output.content
+    except Exception as e:
+        return f"Erro ao avaliar conversa: {e}"
+
+
 # Rotas
 
 @bp.route("/")
@@ -102,10 +126,12 @@ def home():
 def usuario():
     if request.method == "POST":
         if "enviar" in request.form:
-            registrar_log("usuário", request.form["mensagem"])
+            registrar_log("aluno", request.form["mensagem"])
         elif "encerrar" in request.form:
-            registrar_log("usuário", "CONVERSA ENCERRADA PELO USUÁRIO")
-        return redirect(url_for(".usuario"))
+            registrar_log("aluno", "CONVERSA ENCERRADA PELO ALUNO")
+        elif "reiniciar" in request.form:
+            limpar_historico()
+            return redirect(url_for(".usuario"))
     return render_template("usuario.html", historico=carregar_historico())
 
 
@@ -121,7 +147,7 @@ def atendente():
             conversa = carregar_historico()[-2:]  # Pega as últimas duas linhas
             pergunta = None
             for l in conversa:
-                if "[USUÁRIO]" in l:
+                if "[ALUNO]" in l:
                     pergunta = l.split("]")[-1].strip()
                     break
             if pergunta:
@@ -129,13 +155,15 @@ def atendente():
                 registrar_log("juiz", avaliacao)
         elif "encerrar" in request.form:
             registrar_log("atendente", "CONVERSA ENCERRADA PELO ATENDENTE")
-        return render_template("atendente.html", historico=carregar_historico(), avaliacao=avaliacao)
+        elif "reiniciar" in request.form:
+            limpar_historico()
+            return redirect(url_for(".usuario"))
     return render_template("atendente.html", historico=carregar_historico(), avaliacao=avaliacao)
 
 
 @bp.route("/rag")
 def api_rag():
-    contexto = carregar_conversa().splitlines()[0]
+    contexto = carregar_conversa().splitlines()[-3:-2]
     print(f"Contexto carregado: {contexto}")
     if len(contexto) > 500:
         contexto = contexto[-500:]
@@ -143,8 +171,8 @@ def api_rag():
     print(resultado)
     return resultado
 
-# @bp.route("/api/juiz")
-# def api_juiz():
-#     conversa = carregar_conversa()
-#     resultado = avaliar_conversa(conversa)
-#     return jsonify({"resultado": resultado})
+@bp.route("/juiz")
+def api_juiz():
+    conversa = carregar_conversa()
+    resultado = avaliar_conversa(conversa)
+    return jsonify({"resultado": resultado})

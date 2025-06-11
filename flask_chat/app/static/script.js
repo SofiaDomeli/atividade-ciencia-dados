@@ -9,12 +9,8 @@ function abrirModalRAG() {
     });
 }
 
-// function abrirModalRAG() {
-//     document.getElementById('ragContent').textContent = 'Meu deus do céu';
-// }
-
 function abrirModalJuiz() {
-    fetch('/api/juiz')
+    fetch('/juiz')
     .then(res => res.json())
     .then(data => {
         document.getElementById('juizContent').textContent = data.resultado;

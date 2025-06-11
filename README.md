@@ -1,38 +1,56 @@
-# TECH_flask_chat
-Flask App as an educational lab for AI and IoT.
-Aplicação Flask como laboratório didático para IA e IoT.
 
-With many thanks to Miguel Grinberg (https://github.com/miguelgrinberg) for his Flask Mega-Tutorial (https://blog.miguelgrinberg.com/post/the-flask-mega-tutorial-part-i-hello-world)
+# Plataforma de Chat com Juízes de IA
 
-AI-aided development.
+**Uma plataforma de chat interativa onde alunos e atendentes tiram dúvidas, com dois juízes de IA para garantir a qualidade das respostas.**
 
-___
+## Funcionalidades
+- **Chat Aluno x Atendente**: O aluno envia perguntas e o atendente responde.
+- **Juízes de IA**:
+  - **Juiz Gente Boa**: Avalia a conversa de forma amigável.
+  - **Juiz Rígido**: Avalia a correção das respostas e identifica possíveis erros.
+- **Logs de Conversa**: As conversas são registradas em `conversa.log`.
 
-## Aplicação inicial
-O objetivo desta versão é apresentar o framework Flask.
+## Tecnologias Utilizadas
+- **Flask**
+- **python-dotenv**
+- **ChatGoogleGenerativeAI**
 
-Esta aplicação consiste em dois clientes de chat: usuario e atendente e cada cliente um mantém seu próprio log de conversa (`usuario.log` e `atendente.log`, respectivamente). No entanto, ainda não se conversam de fato.
+## Como Rodar
 
-### Recursos:
-* Framework Flask: `flask`
-* Para expansão modular: Blueprint e Jinja2
-* Uso de variáveis de ambiente: `python-dotenv`
+### 1. Clonar o Repositório
 
-## Na primeira vez que usar este pacote
-* Faça download do repositório.
-* Descompacte o arquivo em uma pasta no seu computador, **DE FORMA ORGANIZADA**.
-* Na pasta flask_app, clique com o botão direito do mouse e selecione `Mostrar mais opções` --> `Abrir com Code` (opção de menu com o ícone do VSCode).
-* Crie e configure um ambiente virtual
-    * Abra um terminal no VSCode e execute:
-    * `python.exe -m venv .venv`
-    * `.venv\Scripts\Activate`
-    * Isso ativa o ambiente virtual e o prompt deverá mudar, passando a mostrar `(.venv)` no início da linha. Digite:
-        * `python.exe -m pip install --upgrade pip`
-        * `pip install flask python-dotenv`
+```bash
+git clone <URL do repositório>
+```
 
-           Agora você pode executar a aplicação:
-        * `flask run`
+### 2. Criar e Ativar o Ambiente Virtual
 
-## Quando usar nas próximas vezes, digite:
-* `.venv\Scripts\Activate`
-* `flask run`
+```bash
+python -m venv .venv
+.venv\Scripts\Activate  # No Windows
+source .venv/bin/activate  # No macOS/Linux
+```
+
+### 3. Instalar Dependências
+
+```bash
+pip install -r requirements.txt
+```
+
+### 4. Configurar Variáveis de Ambiente
+
+Crie o arquivo `.env` e adicione sua chave de API do Google Gemini:
+
+```
+GEMINI_API_KEY=your_google_api_key_here
+```
+
+### 5. Rodar a Aplicação
+
+```bash
+flask run
+```
+
+Acesse a aplicação em: `http://127.0.0.1:5000/`.
+
+---
