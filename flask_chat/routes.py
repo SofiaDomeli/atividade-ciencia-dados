@@ -157,7 +157,7 @@ def atendente():
             registrar_log("atendente", "CONVERSA ENCERRADA PELO ATENDENTE")
         elif "reiniciar" in request.form:
             limpar_historico()
-            return redirect(url_for(".usuario"))
+            return redirect(url_for(".atendente"))
     return render_template("atendente.html", historico=carregar_historico(), avaliacao=avaliacao)
 
 
